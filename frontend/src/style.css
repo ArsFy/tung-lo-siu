@@ -1,0 +1,79 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.box {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.container {
+    position: relative;
+    width: 95%;
+    margin-top: 10px;
+    margin-left: 2.5%;
+}
+
+.container img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.container .img-card {
+    width: calc(100% / 5 - 10px);
+    vertical-align: top;
+    padding: 5px;
+    display: inline;
+    position: absolute;
+}
+
+@media screen and (max-width: 888px) {
+    .container .img-card {
+        width: calc(100% / 4 - 10px);
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .container .img-card {
+        width: calc(100% / 3 - 10px);
+    }
+}
+
+.dialog-img .MuiPaper-root::-webkit-scrollbar {
+    display: none;
+}
+
+.logout svg {
+    visibility: collapse;
+    color: #FFF;
+    z-index: 99;
+}
+
+.logout .ol {
+    visibility: collapse;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.logout:hover svg {
+    visibility: visible;
+}
+
+.logout:hover .ol {
+    visibility: visible;
+}
+
+.link {
+    margin: 0;
+    color: #1976d2;
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-decoration-color: rgba(25, 118, 210, 0.4);
+}
