@@ -4,7 +4,7 @@
 ![](https://img.shields.io/badge/NodeJS-v16-green)
 ![](https://img.shields.io/badge/PRs-welcome-green)
 
-![](https://ci.cncn3.cn/c8ef264a1e1b7580b540b941325bd5bd.png)
+![image](https://user-images.githubusercontent.com/93700457/187623273-190089d7-a39a-4579-b186-98d7ed202b6b.png)
 
 ### What is it?
 
@@ -49,7 +49,7 @@ npm run install
 
 Edit config.json, edit `site_name` and `http_port`
 
-```json
+```js
 {
     "site_name": "TungLoSiu",
     ...
