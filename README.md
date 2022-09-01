@@ -42,7 +42,7 @@ Follow the prompts to config MySQL and create an admin user.
 > If you want to create a second admin user, please refer to install.js (under dev)
 
 ```bash
-npm run install
+npm run run
 ```
 
 3. Config
