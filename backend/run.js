@@ -55,7 +55,7 @@ console.log("Before the install start, make sure the database is empty.");
         config.db_database = database;
         config.db_port = port;
         config.key = randomString();
-        session_keys = [randomString(), randomString()]
+        config.session_keys = [randomString(), randomString()]
 
         fs.writeFileSync('./config.json', JSON.stringify(config));
 
