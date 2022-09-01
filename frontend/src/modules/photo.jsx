@@ -71,13 +71,15 @@ class Photo extends React.Component {
                             <Card sx={{ padding: '5px' }}>
                                 <img src={this.props.src} style={{ filter: (this.props.info.r18 && !this.props.shownsfw) ? 'blur(10px)' : '' }} alt='' name="item" onLoad={() => {
                                     this.props.onLoad();
-                                    this.setState({ loaded: true });
+                                    this.setState({ loaded: true, chiplist: [] });
                                     (async () => {
                                         let img = new Image();
                                         img.src = this.props.src;
                                         img.onload = () => {
-                                            chiplist.push(`${img.width}x${img.height}`);
-                                            this.setState({ chiplist: chiplist, wh: [img.width, img.height] })
+                                            let cl = [];
+                                            cl.push(`${img.width}x${img.height}`);
+                                            cl.push(...JSON.parse(this.props.info.tags));
+                                            this.setState({ chiplist: cl, wh: [img.width, img.height] })
                                         }
                                     })()
                                 }} />
