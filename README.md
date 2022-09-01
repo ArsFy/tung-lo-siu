@@ -39,7 +39,7 @@ npm i
 
 Follow the prompts to config MySQL and create an admin user.
 
-> If you want to create a second admin user, please refer to install.js (under dev)
+> If you want to create a second admin user, please refer to run.js (under dev)
 
 ```bash
 npm run run
