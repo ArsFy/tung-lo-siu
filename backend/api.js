@@ -95,7 +95,9 @@ module.exports = {
                 let filename = new Date() / 1 + "-" + randomString() + ".webp";
 
                 fs.copyFileSync(req.files.file.path, path.join(__dirname, './image/', filename));
-                await query("INSERT INTO `pic` (`title`, `tags`, `text`, `file`, `r18`) VALUES (?, ?, ?, ?, ?)", [title, tags, text, filename, r18])
+                await query("INSERT INTO `pic` (`title`, `tags`, `text`, `file`, `r18`) VALUES (?, ?, ?, ?, ?)", [title, tags, text, filename, r18]);
+                taglist.push(...JSON.parse(tags))
+                taglist = Array.from(new Set(taglist));
                 res.json({ status: 'ok' })
             } else {
                 res.json({ status: 'empty' })

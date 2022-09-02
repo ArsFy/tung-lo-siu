@@ -66,7 +66,7 @@ class Photo extends React.Component {
         return (
             <>
                 <Box className='img-card' style={{ visibility: loaded ? "visible" : "collapse" }}>
-                    <Badge badgeContent={(this.props.info.r18 && !this.props.shownsfw) ? 'NSFW' : 0} color="primary" sx={{ "span": { zIndex: 1200 } }}>
+                    <Badge badgeContent={(this.props.info.r18 && !this.props.shownsfw) ? 'N' : 0} color="primary" sx={{ "span": { zIndex: 1200 } }}>
                         <CardActionArea sx={{ borderRadius: '5px' }} onClick={() => this.setState({ show: true })}>
                             <Card sx={{ padding: '5px' }}>
                                 <img src={this.props.src} style={{ filter: (this.props.info.r18 && !this.props.shownsfw) ? 'blur(10px)' : '' }} alt='' name="item" onLoad={() => {
