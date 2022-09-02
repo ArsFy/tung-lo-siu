@@ -110,6 +110,7 @@ export default class Add extends React.Component {
         }
 
         this.close = () => {
+            this.taglist = [];
             this.setState({ taglist: [], img: '', tagvalue: '' });
             this.props.handleClose();
         }

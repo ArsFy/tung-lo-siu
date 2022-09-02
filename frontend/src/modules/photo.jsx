@@ -3,6 +3,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
+import TextField from '@mui/material/TextField';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -28,7 +29,7 @@ class Photo extends React.Component {
             loaded: false,
             chiplist: JSON.parse(this.props.info.tags),
             wh: [0, 0],
-            mh: false,
+            mh: false
         }
     }
 
@@ -118,16 +119,26 @@ class Photo extends React.Component {
                                 </Stack>
                                 <DialogContentText dangerouslySetInnerHTML={{ __html: des }}></DialogContentText>
                             </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => {
-                                    this.setState({
-                                        alertStatus: "success",
-                                        alertOpen: true,
-                                        alertText: 'Download...'
-                                    });
-                                    this.downloadImg(this.props.src)
-                                }}>Download</Button>
-                                <Button onClick={handleClose} autoFocus>Back</Button>
+                            <DialogActions sx={{ flexDirection: 'column' }}>
+                                <TextField
+                                    label="Link"
+                                    variant="outlined"
+                                    sx={{ my: 1, width: '100%' }}
+                                    id="pic-link"
+                                    onFocus={() => document.getElementById("pic-link").select()}
+                                    value={window.location.origin + this.props.src}
+                                />
+                                <Box sx={{ flexDirection: 'row', display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+                                    <Button onClick={() => {
+                                        this.setState({
+                                            alertStatus: "success",
+                                            alertOpen: true,
+                                            alertText: 'Download...'
+                                        });
+                                        this.downloadImg(this.props.src)
+                                    }}>Download</Button>
+                                    <Button onClick={handleClose} autoFocus>Back</Button>
+                                </Box>
                             </DialogActions>
                         </Box>
                     </Box>

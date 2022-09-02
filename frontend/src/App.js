@@ -211,17 +211,19 @@ class App extends React.Component {
                                 ml: 0.5,
                                 opacity: 0.6
                             }} /></Typography>
+                            <Tooltip title="Setting">
+                                <IconButton onClick={() => this.setState({ setting_show: true })} size="large">
+                                    <SettingsIcon />
+                                </IconButton>
+                            </Tooltip>
                             {!login && <Button color="inherit" onClick={() => this.setState({ login_show: true })}>Login</Button>}
                             {login &&
                                 <>
                                     <Tooltip title="Add">
                                         <IconButton onClick={() => this.setState({ add_show: true })} size="large">
                                             <AddIcon />
-                                        </IconButton></Tooltip>
-                                    <Tooltip title="Setting">
-                                        <IconButton onClick={() => this.setState({ setting_show: true })} size="large">
-                                            <SettingsIcon />
-                                        </IconButton></Tooltip>
+                                        </IconButton>
+                                    </Tooltip>
                                     <Tooltip title={username}>
                                         <IconButton onClick={this.logout} size="large" sx={{ my: 1, ml: 1, backgroundColor: '#d7d7d7', backgroundImage: `url(https://www.gravatar.com/avatar/${md5}?d=mm)`, backgroundSize: 'cover' }} className="logout">
                                             <LogoutIcon />
