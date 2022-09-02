@@ -104,15 +104,11 @@ export default class Add extends React.Component {
                 form.append("r18", String(this.state.r18));
 
                 axios.post('/api/upload', form).then(res => {
+                    this.taglist = [];
+                    this.setState({ taglist: [], img: '', tagvalue: '' });
                     this.props.reload();
                 })
             })
-        }
-
-        this.close = () => {
-            this.taglist = [];
-            this.setState({ taglist: [], img: '', tagvalue: '' });
-            this.props.handleClose();
         }
 
         const notempty = (list) => {
@@ -131,7 +127,6 @@ export default class Add extends React.Component {
                 description: data.get("description"),
                 img: this.img
             };
-            console.log(formdata)
             if (notempty(formdata)) {
                 this.upload(formdata);
             } else {
@@ -169,7 +164,7 @@ export default class Add extends React.Component {
         return (
             <>
                 <BootstrapDialog
-                    onClose={this.close}
+                    onClose={this.props.handleClose}
                     aria-labelledby="customized-dialog-title"
                     open={this.props.open}
                 >
@@ -179,7 +174,7 @@ export default class Add extends React.Component {
                         id='upload-form'
                         noValidate
                     >
-                        <BootstrapDialogTitle id="customized-dialog-title" onClose={this.close}>
+                        <BootstrapDialogTitle id="customized-dialog-title" onClose={this.props.handleClose}>
                             Add
                         </BootstrapDialogTitle>
                         <DialogContent sx={{ minWidth: { xs: '', sm: '400px' } }}>
@@ -252,7 +247,7 @@ export default class Add extends React.Component {
                             </Box>
                         </DialogContent>
                         <DialogActions>
-                            <Button type="submit" onClick={this.close}>Upload</Button>
+                            <Button type="submit" onClick={this.props.handleClose}>Upload</Button>
                         </DialogActions>
                     </Box>
                 </BootstrapDialog >
