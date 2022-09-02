@@ -108,11 +108,11 @@ class Photo extends React.Component {
                             this.setState({ mh: true })
                         }}></Box>
                         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                            <DialogTitle sx={{ paddingBottom: '5px' }}>
+                            <DialogTitle sx={{ pb: '5px' }}>
                                 {this.props.info.title}
                             </DialogTitle>
-                            <DialogContent>
-                                <Stack direction="row" spacing={1} sx={{ paddingBottom: '5px' }}>
+                            <DialogContent sx={{ minHeight: '60px' }}>
+                                <Stack direction="row" spacing={1} sx={{ pb: '5px' }}>
                                     {chiplist.map((item, index) => {
                                         return <Chip label={item} key={index} />
                                     })}
