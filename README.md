@@ -1,4 +1,6 @@
-# Tung lo siu (銅蘿燒)
+# Tung lo siu (銅蘿燒) as Katonei Bot
+
+> Katonei Bot: https://github.com/ArsFy/katonei_bot
 
 ![](https://img.shields.io/badge/license-MIT-blue)
 ![](https://img.shields.io/badge/NodeJS-v16-green)

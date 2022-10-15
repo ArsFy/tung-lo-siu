@@ -13,23 +13,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import Tooltip from '@mui/material/Tooltip';
-import LogoutIcon from '@mui/icons-material/Logout';
-import SettingsIcon from '@mui/icons-material/Settings';
-import AddIcon from '@mui/icons-material/Add';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Avatar from '@mui/material/Avatar';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 
 import Photo from './modules/photo';
-import Login from './dialog/login';
-import Add from './dialog/add';
-import Setting from './dialog/setting';
 
 import axios from 'axios';
 
@@ -55,16 +46,8 @@ class App extends React.Component {
             imglist: [],
             load: true,
             count: 0,
-            login_show: false,
-            add_show: false,
-            setting_show: false,
             about_show: false,
-            login: false,
-            md5: '',
-            username: '',
             sitename: '',
-            paste: false,
-            tags: [],
             taglist: [],
             shownsfw: localStorage.getItem("shownsfw") === 'true',
         }
@@ -103,28 +86,23 @@ class App extends React.Component {
     componentDidMount() {
         window.addEventListener("resize", this.waterfall);
 
-        this.logout = () => {
-            this.setState({
-                alertStatus: "success",
-                alertOpen: true,
-                alertText: 'Logging out...'
-            });
-            axios({
-                method: 'POST',
-                url: '/api/logout',
-                withCredentials: true
-            }).then(res => {
-                window.location.reload()
-            })
-        }
+        this.scrollLoad = () => {
+            clearTimeout(this.scroll);
+            this.scroll = setTimeout(() => {
+                let ele = document.getElementById("cp");
 
-        this.pasteImage = (e) => {
-            if (this.state.login) {
-                this.setState({
-                    add_show: true,
-                    paste: e
-                })
-            }
+                if (
+                    (ele.offsetTop + ele.offsetHeight <= document.documentElement.scrollTop + document.documentElement.clientHeight)
+                    &&
+                    (ele.offsetTop >= document.documentElement.scrollTop)
+                ) {
+                    if (this.state.count !== this.state.imglist.length && !this.lock) {
+                        this.lock = true;
+                        this.page++;
+                        this.start(this.page);
+                    }
+                }
+            }, 100);
         }
 
         this.scrollLoad = () => {
@@ -151,7 +129,7 @@ class App extends React.Component {
             axios({
                 method: 'POST',
                 url: '/api/list',
-                data: { page: page ? Number(page) : 1, ...(taglist ? { tags: JSON.stringify(taglist) } : { tags: JSON.stringify(this.state.taglist) }) },
+                data: { page: page ? Number(page) : 1 },
                 withCredentials: true
             }).then(res => {
                 let isone = (page ? Number(page) : 1) === 1;
@@ -161,11 +139,7 @@ class App extends React.Component {
                     imglist: isone ? res.data.data : this.state.imglist,
                     count: res.data.count,
                     ...isone ? {
-                        sitename: res.data.sitename,
-                        login: res.data.login,
-                        md5: res.data.md5,
-                        username: res.data.username,
-                        tags: res.data.tags
+                        sitename: res.data.sitename
                     } : {}
                 })
                 if (isone) document.title = res.data.sitename;
@@ -183,18 +157,15 @@ class App extends React.Component {
 
         this.start();
 
-        window.addEventListener('paste', this.pasteImage);
         window.addEventListener('scroll', this.scrollLoad);
     }
 
     componentWillUnmount() {
         window.removeEventListener("resize", this.waterfall);
-        window.removeEventListener('paste', this.pasteImage);
-        window.removeEventListener('scroll', this.scrollLoad);
     }
 
     render() {
-        let { imglist, load, alertOpen, alertStatus, alertText, login_show, login, md5, username, sitename, add_show, setting_show, paste, shownsfw, about_show, count, tags, taglist } = this.state;
+        let { imglist, load, alertOpen, alertStatus, alertText, sitename, shownsfw, about_show, count } = this.state;
 
         return (
             <Box className='box'>
@@ -211,27 +182,6 @@ class App extends React.Component {
                                 ml: 0.5,
                                 opacity: 0.6
                             }} /></Typography>
-                            <Tooltip title="Setting">
-                                <IconButton onClick={() => this.setState({ setting_show: true })} size="large">
-                                    <SettingsIcon />
-                                </IconButton>
-                            </Tooltip>
-                            {!login && <Button color="inherit" onClick={() => this.setState({ login_show: true })}>Login</Button>}
-                            {login &&
-                                <>
-                                    <Tooltip title="Add">
-                                        <IconButton onClick={() => this.setState({ add_show: true })} size="large">
-                                            <AddIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title={username}>
-                                        <IconButton onClick={this.logout} size="large" sx={{ my: 1, ml: 1, backgroundColor: '#d7d7d7', backgroundImage: `url(https://www.gravatar.com/avatar/${md5}?d=mm)`, backgroundSize: 'cover' }} className="logout">
-                                            <LogoutIcon />
-                                            <Box className="ol"></Box>
-                                        </IconButton>
-                                    </Tooltip>
-                                </>
-                            }
                         </Toolbar>
                     </AppBar>
                 </Box>
@@ -241,22 +191,6 @@ class App extends React.Component {
                 >
                     <CircularProgress color="inherit" />
                 </Backdrop>
-                <Stack direction="row" spacing={1} sx={{
-                    mt: '70px', width: '95%', marginLeft: '2.5%', overflowX: 'scroll', "::-webkit-scrollbar": {
-                        display: 'none'
-                    }
-                }}>
-                    {tags.map((item, index) => {
-                        return <Chip label={item} key={index} variant={taglist.indexOf(item) !== -1 ? "" : "outlined"} onClick={() => {
-                            if (taglist.indexOf(item) === -1) {
-                                taglist.push(item); this.setState({ taglist: taglist });
-                            } else {
-                                taglist.splice(taglist.indexOf(item), 1); this.setState({ taglist: taglist });
-                            }
-                            this.start(1, taglist); this.page = 1;
-                        }} />
-                    })}
-                </Stack>
                 <Box className="container">
                     {imglist.map((item, index) => {
                         return <Photo src={`/image/${item.file}`} key={index} onLoad={this.onLoad} info={item} shownsfw={shownsfw} />
@@ -275,17 +209,6 @@ class App extends React.Component {
                         zIndex: 1299
                     }}>Powered By <Link href="https://github.com/ArsFy/tung-lo-siu" target="_blank">TungLoSiu</Link></Typography>
                 </Box>
-                {/* Login */}
-                <Login open={login_show} handleClose={() => this.setState({ login_show: false })} />
-                {/* Add */}
-                <Add open={add_show} handleClose={() => this.setState({ add_show: false, paste: false })} paste={paste} reload={() => {
-                    this.setState({ imglist: [] });
-                    this.start();
-                }} />
-                {/* Setting */}
-                <Setting open={setting_show} handleClose={() => this.setState({ setting_show: false })} upsetting={() => {
-                    this.setState({ shownsfw: localStorage.getItem("shownsfw") === 'true' })
-                }} />
                 {/* About */}
                 <Dialog
                     open={about_show}

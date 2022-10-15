@@ -1,11 +1,11 @@
 {
-    "site_name": "TungLoSiu",
-    "db_host": "",
-    "db_user": "",
-    "db_pass": "",
-    "db_database": "",
-    "db_port": 3306,
-    "key": "",
-    "http_port": 80,
-    "session_keys": []
+    "site_name": "Katonei",
+    "db_host": "127.0.0.1",
+    "db_user": "katonei",
+    "db_pass": "123456",
+    "db_database": "katonei",
+    "db_collection": "katonei",
+    "image": "/www/wwwroot/photos",
+    "db_port": 27017,
+    "http_port": 80
 }

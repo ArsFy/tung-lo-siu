@@ -27,7 +27,7 @@ class Photo extends React.Component {
             alertText: "",
             show: false,
             loaded: false,
-            chiplist: JSON.parse(this.props.info.tags),
+            chiplist: this.props.info.tags,
             wh: [0, 0],
             mh: false
         }
@@ -79,7 +79,7 @@ class Photo extends React.Component {
                                         img.onload = () => {
                                             let cl = [];
                                             cl.push(`${img.width}x${img.height}`);
-                                            cl.push(...JSON.parse(this.props.info.tags));
+                                            cl.push(...this.props.info.tags);
                                             this.setState({ chiplist: cl, wh: [img.width, img.height] })
                                         }
                                     })()
@@ -112,9 +112,9 @@ class Photo extends React.Component {
                                 {this.props.info.title}
                             </DialogTitle>
                             <DialogContent sx={{ minHeight: '60px' }}>
-                                <Stack direction="row" spacing={1} sx={{ pb: '5px' }}>
+                                <Stack direction="row" spacing={1} sx={{ pb: '5px', flexWrap: 'wrap' }}>
                                     {chiplist.map((item, index) => {
-                                        return <Chip label={item} key={index} />
+                                        return <Chip label={item} key={index} style={{ marginBottom: '8px' }} />
                                     })}
                                 </Stack>
                                 <DialogContentText dangerouslySetInnerHTML={{ __html: des }}></DialogContentText>
