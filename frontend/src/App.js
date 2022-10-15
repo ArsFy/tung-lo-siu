@@ -241,7 +241,11 @@ class App extends React.Component {
                 >
                     <CircularProgress color="inherit" />
                 </Backdrop>
-                <Stack direction="row" spacing={1} sx={{ mt: '70px', width: '95%', marginLeft: '2.5%' }}>
+                <Stack direction="row" spacing={1} sx={{
+                    mt: '70px', width: '95%', marginLeft: '2.5%', overflowX: 'scroll', "::-webkit-scrollbar": {
+                        display: 'none'
+                    }
+                }}>
                     {tags.map((item, index) => {
                         return <Chip label={item} key={index} variant={taglist.indexOf(item) !== -1 ? "" : "outlined"} onClick={() => {
                             if (taglist.indexOf(item) === -1) {
