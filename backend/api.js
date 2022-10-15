@@ -28,8 +28,10 @@ module.exports = {
         try {
             let count, data;
             if (tags.length > 0) {
-                count = await query("SELECT count(id) as count FROM pic WHERE JSON_CONTAINS(JSON_ARRAY('" + tags.join("', '") + "'), tags) AND tags <> JSON_ARRAY()");
-                data = await query("SELECT * FROM pic WHERE JSON_CONTAINS(JSON_ARRAY('" + tags.join("', '") + "'), tags) AND tags <> JSON_ARRAY() ORDER BY `id` DESC LIMIT ?,20", [(page - 1) * 20]);
+                for (let i in tags) tags[i] = `"${tags[i]}"`;
+                let memberof = tags.join(" MEMBER OF (tags) AND ") + " MEMBER OF (tags)";
+                count = await query(`SELECT count(id) as count FROM pic WHERE ${memberof} AND tags <> JSON_ARRAY()`);
+                data = await query("SELECT * FROM pic WHERE " + memberof + " AND tags <> JSON_ARRAY() ORDER BY `id` DESC LIMIT ?,20", [(page - 1) * 20]);
             } else {
                 count = await query("SELECT count(id) as count FROM pic");
                 data = await query("SELECT * FROM pic ORDER BY `id` DESC LIMIT ?,20", [(page - 1) * 20]);
