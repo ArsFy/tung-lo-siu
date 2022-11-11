@@ -6,7 +6,7 @@
 
 > Online: https://pic.arsfy.buzz
 
-![image](https://user-images.githubusercontent.com/93700457/187623273-190089d7-a39a-4579-b186-98d7ed202b6b.png)
+![image](https://user-images.githubusercontent.com/93700457/201307426-60b2fadc-58b2-4144-97c7-f3401d6fdf9a.png)
 
 ### What is it?
 
