@@ -4,7 +4,7 @@
 ![](https://img.shields.io/badge/NodeJS-v16-green)
 ![](https://img.shields.io/badge/PRs-welcome-green)
 
-> Online: https://pic.arsfy.buzz
+> Online: https://pic.arsfy.top
 
 ![image](https://user-images.githubusercontent.com/93700457/201307426-60b2fadc-58b2-4144-97c7-f3401d6fdf9a.png)
 
